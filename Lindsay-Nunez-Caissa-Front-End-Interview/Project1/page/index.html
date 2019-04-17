@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Caissa, LLC - Front-End Interview Project - Part 1</title>
+      <link href="../Content/bootstrap.css" rel="stylesheet" />
+      <script src="../Scripts/jquery-1.11.0.min.js"></script>
+      <script src="../Scripts/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-6">
+               <h2>Securities</h2>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-12">
+               <table id="securityTable"
+                  class="table table-bordered table-condensed table-striped">
+               </table>
+               <button class="btn btn-primary"  onclick="showModal();" >ADD</button>
+            </div>
+         </div>
+         <!-- SECURITIES MODAL -->
+         <div class="row">
+            <div class="col-sm-6">
+               <div id="popup" class="panel panel-primary show">
+                  <div class="panel-heading">
+                     Add Security 
+                     <div class="closeButton" onclick="hideModal();">close</div>
+                  </div>
+                  <div class="panel-body">
+                     <div class="form-group">
+                        <label for="securityName">
+                        Name
+                        </label>
+                        <input type="text"
+                           class="form-control"
+                           value=""
+                           id="securityName" />
+                     </div>
+                     <div class="form-group">
+                        <label for="ISIN">
+                        ISIN
+                        </label>
+                        <input type="number"
+                           class="form-control"
+                           value=""
+                           id="securityISIN" />
+                     </div>
+                     <div class="form-group">
+                        <label for="securityCountry">
+                        Country
+                        </label>
+                        <select id = "securityCountry">
+                           <option value="notSelected"></option>
+                           <option value="United States">United States</option>
+                           <option value="Canada">Canada</option>
+                           <option value="Mexico">Mexico</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="panel-footer">
+                     <div class="row">
+                        <div class="col-xs-12 add">
+                           <button type="button" id="updateButton"
+                              class="btn btn-primary"
+                              onclick="securityUpdate();">
+                           Add
+                           </button>
+                           <button type="button" id="deleteButton"
+                              class="btn btn-primary show"
+                              onclick="securityDelete(this);">
+                           Delete
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    <style>
+        .show {
+        display: none !important;
+      }
+
+      .closeButton {
+        display: inline-block;
+        position: relative;
+        left: 70%;
+        cursor: pointer;
+      }
+
+      .panel {
+        margin-top: 50px;
+      }
+
+      .table {
+        margin: 30px auto;
+      }
+        </style>
+
+    <script>
+      // Current security being edited
+      var editRow = null;
+      //Makes the security modal visible
+      function showModal() {
+        $("#popup").removeClass("show");
+      }
+      //Hides the security modal
+      function hideModal() {
+        $("#popup").addClass("show");
+      }
+      //Displays the securities in the table
+      function securityDisplay(ctl) {
+        editRow = $(ctl).parents("tr");
+        var cols = editRow.children("td");
+
+        $("#securityName").val($(cols[0]).text());
+        $("#securityISIN").val($(cols[1]).text());
+        $("#securityCountry").val($(cols[2]).text());
+        //show modal
+        showModal();
+        // Change ADD TO UPDATE Mode
+        $("#updateButton").text("Update");
+        $(".panel-heading").text("Update Security");
+        $("#deleteButton").removeClass("show");
+      }
+      //Decides whether to add or update security
+      function securityUpdate() {
+        //First check if we are in add or update mode
+        if ($("#updateButton").text() == "Update") {
+          // Update security in <table>
+          securityUpdateInTable();
+        } else {
+          // Add security to <table>
+          securityAddToTable();
+        }
+        // Clear form fields
+        formClear();
+        // Focus to security name field
+        $("#securityName").focus();
+        // Hides the modal
+        hideModal();
+        //Hides the delete button
+        $("#deleteButton").addClass("show");
+      }
+      // Add security to <table>
+      function securityAddToTable() {
+        // First check if a <tbody> tag exists, add one if not
+        if ($("#securityTable tbody").length == 0) {
+          $("#securityTable").append("<tbody></tbody>");
+        }
+        // Append security to table
+        $("#securityTable tbody").append(
+          securityBuildTableRow());
+        // Hide modal
+        hideModal();
+      }
+      // Update security in <table>
+      function securityUpdateInTable() {
+        // Add changed security to table
+        $(editRow).after(securityBuildTableRow());
+        // Remove original security
+        $(editRow).remove();
+        // Clear form fields
+        formClear();
+        // Change Update Button Text BACK TO ADD
+        $("#updateButton").text("Add");
+        $(".panel-heading").text("Add Security");
+        $("#deleteButton").addClass("show");
+      }
+      // Build a <table> row of security data
+      function securityBuildTableRow() {
+        var ret =
+          "<tr>" +
+          "<td>" + $("#securityName").val() + "</td>" +
+          "<td>" + $("#securityISIN").val() + "</td>" +
+          "<td>" + $("#securityCountry").val() + "</td>" +
+          "<td>" + "Prices" + "</td>" +
+          "<td>" +
+          "<button type='button' " +
+          "onclick='securityDisplay(this);' " +
+          "class='btn btn-default'>" +
+          "<span class='glyphicon glyphicon-edit' />" +
+          "</td>" +
+          "</tr>"
+        return ret;
+      }
+      // Delete security from <table>
+      function securityDelete(ctl) {
+        // Remove original security
+        $(editRow).remove();
+        // Clear form fields
+        formClear();
+        // Change Update Button Text BACK TO ADD
+        $("#updateButton").text("Add");
+        $(".panel-heading").text("Add Security");
+        // Hide the modal
+        hideModal();
+        // Hide the delete button
+        $("#deleteButton").addClass("show");
+      }
+      // Clear form fields
+      function formClear() {
+        $("#securityName").val("");
+        $("#securityISIN").val("");
+        $("#securityCountry").val("");
+      }
+    </script>
+  </body>
+</html>

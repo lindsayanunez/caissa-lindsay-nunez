@@ -1,0 +1,170 @@
+/*OVERALL STYLES*/
+html {
+  box-sizing: border-box;
+  font-family: 'Cabin', sans-serif;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+ width: 100%;
+}
+
+.widget {
+  margin: auto;
+  width: 30%;
+}
+
+/*COLOR VARIABLE*/
+:root {
+  --goal-color: rgb(240,95,60);
+  --background-gray: rgb(250,251,250);
+  --border-gray: rgb(231,232,231);
+}
+
+/*GOAL*/
+
+.goalNote{
+  background-color:rgb(65,65,65);
+  color:white;
+  font-size:1.1em;
+  font-weight: lighter;
+  text-align: center;
+  padding: 20px 0px;
+  border-radius: 3px;
+}
+
+.speech-bubble-arrow{
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid rgb(65,65,65);
+  position: relative;
+  left: 85%;
+}
+
+/*SCALE FOR AMOUNT REMAINING TO REACH GOAL*/
+/*For realworld application, I'd create a function
+that changed the width percentage for gSComplete and gSRemaining
+based on the percentages for the actual goal achieved.*/
+
+.goalScale{
+  margin-top: 1px;
+  margin-bottom: -5px;
+  padding: 7px;
+  display:inline-block;
+  border: 1px solid var(--border-gray);
+}
+
+.gSComplete{
+  background-color: var(--goal-color);
+  width: 70%;
+  margin-right:0;
+}
+
+.gSRemaining{
+  background-color: var(--background-gray);
+  width:31%;
+  margin-left:-8px;
+}
+
+/*THE MAIN CONTENT*/
+
+.main{
+  border: 1px solid var(--border-gray);
+  padding: 20px 40px;
+  color: rgb(130,130,130);
+}
+
+.daysLeftText{
+  color: var(--goal-color);
+  font-weight: 900;
+}
+
+.donorNumber{
+  font-weight: 900;
+  font-size:0.9em;
+}
+
+/*THE FORM TO DONATE*/
+.form{
+  text-align: center;
+  margin:10px 0 0 10px;
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+}
+
+.dollar {
+  border: 1px solid var(--border-gray);
+  padding:15px;
+  font-weight: 600;
+  font-size:1.25em;
+  color: rgb(130,130,130);
+  border-radius: 5px;
+  height: 55px;
+  margin-left:-5%;
+}
+
+.dollar input {
+    border: 0;
+    font-size:1em;
+    font-weight: 600;
+    width: 90px;
+}
+
+input[type="submit"]{
+  background-color: rgb(36,188,46);
+  color:white;
+  height: 55px;
+  width: 130px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  margin-left:15%;
+  padding: 15px;
+}
+
+.moreInfo{
+  padding-top:20px;
+}
+
+a{
+  text-decoration: none;
+  color: rgb(123,198,228);
+  font-style: italic;
+}
+
+/*ACTION BUTTONS FOR SAVING OR TELLING*/
+.actions{
+  padding: 10px;
+}
+
+button {
+  width:50%;
+  background-color: var(--background-gray);
+  border: 1px solid var(--border-gray);
+  font-size:.88em;
+  padding: 10px;
+  color:rgb(119,119,119);
+  font-weight:600;
+  border-radius: 3px;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2);
+}
+
+.actions{
+  display:flex;
+  flex-direction:row;
+}
+
+.save{
+  margin-right:3%;
+  margin-left:-3%;
+}
+
+.tell{
+  margin-left:3%;
+  margin-right:-3%;
+}
